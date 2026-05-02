@@ -1,6 +1,8 @@
 using Dapper;
+using CarStock.Models;
+using CarStock.Interfaces;
 
-public sealed class DealerService : IDealerService
+public class DealerService : IDealerService
 {
     private readonly IDatabaseConnection _databaseConnection;
 

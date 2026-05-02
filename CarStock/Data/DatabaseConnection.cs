@@ -1,6 +1,7 @@
+using CarStock.Interfaces;
 using Microsoft.Data.Sqlite;
 
-public sealed class DatabaseConnection : IDatabaseConnection
+public class DatabaseConnection : IDatabaseConnection
 {
     private readonly string _connectionString;
 

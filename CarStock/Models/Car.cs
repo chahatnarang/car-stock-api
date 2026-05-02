@@ -1,3 +1,5 @@
+namespace CarStock.Models;
+
 public sealed class Car()
 {
     public int Id { get; init; }

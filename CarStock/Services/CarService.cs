@@ -1,7 +1,8 @@
 using Dapper;
+using CarStock.Models;
+using CarStock.Interfaces;
 
-
-public sealed class CarRepository : ICarService
+public class CarRepository : ICarService
 {
     private readonly DatabaseConnection _databaseConnection;
 
@@ -32,32 +33,103 @@ public sealed class CarRepository : ICarService
     }
 
     // Get car
-    public Task<Car?> GetByIdAsync(int dealerId, int carId)
+    public async Task<Car?> GetByIdAsync(int dealerId, int carId)
     {
-        throw new NotImplementedException();
+        using var connection = _databaseConnection.CreateConnection();
+
+        return await connection.QuerySingleOrDefaultAsync<Car>(@"
+            SELECT
+                id,
+                dealer_id,
+                make,
+                model,
+                year,
+                stock,
+                created,
+                updated
+            FROM cars
+            WHERE id = @Id
+            AND dealer_id = @DealerId",
+            new { Id = carId, DealerId = dealerId }
+        );
     }
 
     // List cars and stock levels
-    public Task<IEnumerable<Car>> GetDealerStockAsync(int dealerId)
+    public async Task<IEnumerable<Car>> GetDealerStockAsync(int dealerId)
     {
-        throw new NotImplementedException();
+        using var connection = _databaseConnection.CreateConnection();
+        return await connection.QueryAsync<Car>(@"
+            SELECT
+                id,
+                dealer_id,
+                make,
+                model,
+                year,
+                stock,
+                created,
+                updated
+            FROM cars
+            WHERE dealer_id = @DealerId
+            ORDERBY make, model, year",
+            new { DealerId = dealerId }
+        );
     }
 
     // Search car by make and model
-    public Task<IEnumerable<Car>> SearchAsync(int dealerId, string? make, string? model)
+    public async Task<IEnumerable<Car>> SearchAsync(int dealerId, string? make, string? model)
     {
-        throw new NotImplementedException();
+        using var connection = _databaseConnection.CreateConnection();
+        return await connection.QueryAsync<Car>(@"
+            SELECT
+                id,
+                dealer_id,
+                make,
+                model,
+                year,
+                stock,
+                created,
+                updated
+            FROM cars
+            WHERE dealer_id = @DealerId
+            AND (@Make IS NULL OR make LIKE '%' || @Make || '%')
+            AND (@Model IS NULL OR make LIKE '%' || @Model || '%')
+            ORDERBY make, model, year",
+            new { DealerId = dealerId, Make = make, Model = model }
+        );
     }
 
     // Update car stock level
-    public Task<bool> UpdateAsync(int dealerId, int carId, int stock)
+    public async Task<bool> UpdateAsync(int dealerId, int carId, int stock)
     {
-        throw new NotImplementedException();
+        using var connection = _databaseConnection.CreateConnection();
+        var rows = await connection.ExecuteAsync(@"
+            UPDATE cars
+            SET stock = @Stock,
+                updated = @Updated
+            WHERE id = @Id
+            AND dealer_Id = @DealerId",
+            new
+            {
+                Stock = stock,
+                Updated = DateTime.Now.ToString("G"),
+                Id = carId,
+                DealerId = dealerId
+            }    
+        );
+        return rows > 0;
     }
 
     // Remove car
-      public Task<bool> DeleteAsync(int dealerId, int carId)
+    public async Task<bool> DeleteAsync(int dealerId, int carId)
     {
-        throw new NotImplementedException();
+        using var connection = _databaseConnection.CreateConnection();
+
+        var rows = await connection.ExecuteAsync(@"
+            DELETE FROM cars
+            WHERE id = @Id
+            AND dealer_id = @DealerId",
+            new { Id = carId, @DelearId = dealerId }
+        );
+        return rows > 0;
     }
 }

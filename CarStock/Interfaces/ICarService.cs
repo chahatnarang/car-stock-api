@@ -1,3 +1,7 @@
+using CarStock.Models;
+
+namespace CarStock.Interfaces;
+
 public interface ICarService
 {
     Task<int> InsertAsync(Car car);

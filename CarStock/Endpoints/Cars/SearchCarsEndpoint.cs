@@ -22,9 +22,9 @@ public class SearchCarValidator : Validator<SearchCarRequest>
     public class SearchCarEndpoint : Endpoint<SearchCarRequest, IEnumerable<CarResponse>>
     {
         private readonly ICarService _carService;
-        private readonly ICurrerntDealerService _currentDealerService;
+        private readonly ICurrentDealerService _currentDealerService;
 
-        public SearchCarEndpoint(ICarService carService, ICurrerntDealerService currentDealerService)
+        public SearchCarEndpoint(ICarService carService, ICurrentDealerService currentDealerService)
         {
             _carService = carService;
             _currentDealerService = currentDealerService;

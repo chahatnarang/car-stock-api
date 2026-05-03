@@ -1,6 +1,6 @@
 namespace CarStock.Interfaces;
 
-public interface ICurrerntDealerService
+public interface ICurrentDealerService
 {
     int GetDealerId();
 }

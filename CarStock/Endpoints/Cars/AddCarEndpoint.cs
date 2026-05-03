@@ -26,9 +26,9 @@ public class AddCarValidator : Validator<AddCarRequest>
     public class AddCarEndpoint : Endpoint<AddCarRequest, CarResponse>
     {
         private readonly ICarService _carService;
-        private readonly ICurrerntDealerService _currentDealerService;
+        private readonly ICurrentDealerService _currentDealerService;
 
-        public AddCarEndpoint(ICarService carservice, ICurrerntDealerService currerntDealerService)
+        public AddCarEndpoint(ICarService carservice, ICurrentDealerService currerntDealerService)
         {
             _carService = carservice;
             _currentDealerService = currerntDealerService;

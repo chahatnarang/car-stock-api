@@ -21,12 +21,12 @@ public class UpdateCarStockValidator : Validator<UpdateStockRequest>
 public class UpdateStockEndpoint : Endpoint<UpdateStockRequest>
 {
     private readonly ICarService _carService;
-    private readonly ICurrerntDealerService _currentDealerService;
+    private readonly ICurrentDealerService _currentDealerService;
 
-    public UpdateStockEndpoint(ICarService carService, ICurrerntDealerService currerntDealerService)
+    public UpdateStockEndpoint(ICarService carService, ICurrentDealerService currentDealerService)
     {
         _carService = carService;
-        _currentDealerService = currerntDealerService;
+        _currentDealerService = currentDealerService;
     }
 
     public override void Configure()

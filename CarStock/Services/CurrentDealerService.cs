@@ -2,11 +2,11 @@ using CarStock.Interfaces;
 
 namespace CarStock.Services;
 
-public class CurrerntDealerService : ICurrerntDealerService
+public class CurrentDealerService : ICurrentDealerService
 {
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public CurrerntDealerService(IHttpContextAccessor httpContextAccessor)
+    public CurrentDealerService(IHttpContextAccessor httpContextAccessor)
     {
         _httpContextAccessor = httpContextAccessor;
     }

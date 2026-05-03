@@ -6,9 +6,9 @@ namespace CarStock.Endpoints.Cars;
 public class ListCarsEndpoint : EndpointWithoutRequest<IEnumerable<CarResponse>>
 {
     private readonly ICarService _carService;
-    private readonly ICurrerntDealerService _currentDealerService;
+    private readonly ICurrentDealerService _currentDealerService;
 
-    public ListCarsEndpoint(ICarService carService, ICurrerntDealerService currerntDealerService)
+    public ListCarsEndpoint(ICarService carService, ICurrentDealerService currerntDealerService)
     {
         _carService = carService;
         _currentDealerService = currerntDealerService;

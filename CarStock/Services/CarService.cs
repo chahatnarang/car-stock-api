@@ -56,7 +56,7 @@ public class CarService : ICarService
             SELECT id, dealer_id, make, model, year, stock, created, updated
             FROM cars
             WHERE dealer_id = @DealerId
-            ORDERBY make, model, year",
+            ORDER BY make, model, year",
             new { DealerId = dealerId }
         );
     }
@@ -71,7 +71,7 @@ public class CarService : ICarService
             WHERE dealer_id = @DealerId
             AND (@Make IS NULL OR make LIKE '%' || @Make || '%')
             AND (@Model IS NULL OR make LIKE '%' || @Model || '%')
-            ORDERBY make, model, year",
+            ORDER BY make, model, year",
             new { DealerId = dealerId, Make = make, Model = model }
         );
     }

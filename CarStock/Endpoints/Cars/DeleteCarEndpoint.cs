@@ -11,12 +11,12 @@ public class DeleteCarRequest()
 public class DeleteCarEndpoint: Endpoint<DeleteCarRequest>
 {
     public readonly ICarService _carService;
-    public readonly ICurrerntDealerService _currerntDealerService;
+    public readonly ICurrentDealerService _currentDealerService;
 
-    public DeleteCarEndpoint(ICarService carService, ICurrerntDealerService currerntDealerService)
+    public DeleteCarEndpoint(ICarService carService, ICurrentDealerService currentDealerService)
     {
         _carService = carService;
-        _currerntDealerService = currerntDealerService;
+        _currentDealerService = currentDealerService;
     }
 
     public override void Configure()
@@ -27,7 +27,7 @@ public class DeleteCarEndpoint: Endpoint<DeleteCarRequest>
 
     public override async Task HandleAsync(DeleteCarRequest req, CancellationToken ct)
     {
-        var dealerId = _currerntDealerService.GetDealerId();
+        var dealerId = _currentDealerService.GetDealerId();
         var deleted = await _carService.DeleteAsync(dealerId, req.Id);
 
         if (!deleted)

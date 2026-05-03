@@ -11,9 +11,9 @@ public class GetCarRequest
 public class GetCarEndpoint : Endpoint<GetCarRequest, CarResponse>
 {
     private readonly ICarService _carService;
-    private readonly ICurrerntDealerService _currentDealerService;
+    private readonly ICurrentDealerService _currentDealerService;
 
-    public GetCarEndpoint(ICarService carService, ICurrerntDealerService currerntDealerService)
+    public GetCarEndpoint(ICarService carService, ICurrentDealerService currerntDealerService)
     {
         _carService = carService;
         _currentDealerService = currerntDealerService;

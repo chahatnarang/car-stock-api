@@ -6,9 +6,9 @@ namespace CarStock.Services;
 
 public class CarService : ICarService
 {
-    private readonly DatabaseConnection _databaseConnection;
+    private readonly IDatabaseConnection _databaseConnection;
 
-    public CarService(DatabaseConnection databaseConnection)
+    public CarService(IDatabaseConnection databaseConnection)
     {
         _databaseConnection = databaseConnection;
     }

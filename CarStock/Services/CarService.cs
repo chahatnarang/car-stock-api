@@ -70,7 +70,7 @@ public class CarService : ICarService
             FROM cars
             WHERE dealer_id = @DealerId
             AND (@Make IS NULL OR make LIKE '%' || @Make || '%')
-            AND (@Model IS NULL OR make LIKE '%' || @Model || '%')
+            AND (@Model IS NULL OR model LIKE '%' || @Model || '%')
             ORDER BY make, model, year",
             new { DealerId = dealerId, Make = make, Model = model }
         );

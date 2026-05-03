@@ -6,8 +6,8 @@ namespace CarStock.Endpoints.Cars;
 
 public class SearchCarRequest
 {
-    public string Make { get; init; } = "";
-    public string Model { get; init; } = "";
+    public string? Make { get; init; } = "";
+    public string? Model { get; init; } = "";
 }
 
 public class SearchCarValidator : Validator<SearchCarRequest>

@@ -2,6 +2,8 @@ using Dapper;
 using CarStock.Models;
 using CarStock.Interfaces;
 
+namespace CarStock.Services;
+
 public class DealerService : IDealerService
 {
     private readonly IDatabaseConnection _databaseConnection;
@@ -18,7 +20,7 @@ public class DealerService : IDealerService
         return await connection.QuerySingleOrDefaultAsync<Dealer>(@"
             SELECT id, name, email, password, created
             FROM dealers
-            WHERE email = @EMAIL",
+            WHERE email = @Email",
             new { Email = email }
         );
     }

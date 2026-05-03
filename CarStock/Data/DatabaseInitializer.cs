@@ -9,7 +9,7 @@ public static class DatabaseInitialiser
         connection.Open();
 
         connection.Execute(@"
-            CREATE TABLE IF NOT TABLE EXISTS dealers (
+            CREATE TABLE IF NOT EXISTS dealers (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name TEXT NOT NULL,
                 email TEXT NOT NULL UNIQUE,
@@ -19,7 +19,7 @@ public static class DatabaseInitialiser
         ");
 
         connection.Execute(@"
-            CREATE TABLE IF NOT TABLE EXISTS cars (
+            CREATE TABLE IF NOT EXISTS cars (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 dealer_id INTEGER NOT NULL,
                 make TEXT NOT NULL,
@@ -27,7 +27,7 @@ public static class DatabaseInitialiser
                 year INTEGER NOT NULL,
                 stock INTEGER NOT NULL DEFAULT 0,
                 created TEXT NOT NULL,
-                updated TEXT NOT NULL
+                updated TEXT NOT NULL,
                 FOREIGN KEY (dealer_id) REFERENCES dealer(id)
             )
         ");
@@ -40,7 +40,7 @@ public static class DatabaseInitialiser
         {
             connection.Execute(@"
                 INSERT INTO dealers (name, email, password, created)
-                VALUES (@NName, @Email, @Password, @Created)",
+                VALUES (@Name, @Email, @Password, @Created)",
                 new
                 {
                     Name = "Cars Melbourne",
@@ -52,7 +52,7 @@ public static class DatabaseInitialiser
 
             connection.Execute(@"
                 INSERT INTO dealers (name, email, password, created)
-                VALUES (@NName, @Email, @Password, @Created)",
+                VALUES (@Name, @Email, @Password, @Created)",
                 new
                 {
                     Name = "Cars Footscray",

@@ -23,7 +23,7 @@ public class LoginEndpoint : Endpoint<LoginRequest, LoginResponse>
 
     public override void Configure()
     {
-        Post("/api/auth/login");
+        Post("/auth/login");
         AllowAnonymous();
         Description(d => d.WithTags("Auth"));
     }

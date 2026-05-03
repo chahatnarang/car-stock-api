@@ -2,11 +2,13 @@ using Dapper;
 using CarStock.Models;
 using CarStock.Interfaces;
 
-public class CarRepository : ICarService
+namespace CarStock.Services;
+
+public class CarService : ICarService
 {
     private readonly DatabaseConnection _databaseConnection;
 
-    public CarRepository(DatabaseConnection databaseConnection)
+    public CarService(DatabaseConnection databaseConnection)
     {
         _databaseConnection = databaseConnection;
     }

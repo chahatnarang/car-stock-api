@@ -1,6 +1,8 @@
 using Dapper;
 using CarStock.Models;
 using CarStock.Interfaces;
+using CarStock.Helpers.Exceptions;
+using Microsoft.Data.Sqlite;
 
 namespace CarStock.Services;
 
@@ -18,34 +20,45 @@ public class CarService : ICarService
     {
         using var connection = _databaseConnectionFactory.CreateConnection();
 
-        return await connection.ExecuteScalarAsync<int>(@"
+        try
+        {
+            return await connection.ExecuteScalarAsync<int>(@"
             INSERT INTO cars (dealer_id, make, model, year, stock, created, updated)
             VALUES (@DealerId, @Make, @Model, @Year, @Stock, @Created, @Updated);
             SELECT last_insert_rowid();",
-            new
-            {
-                car.DealerId,
-                car.Make,
-                car.Model,
-                car.Year,
-                car.Stock,
-                Created = DateTime.Now.ToString("G"),
-                Updated = DateTime.Now.ToString("G")
-            });
+                new
+                {
+                    car.DealerId,
+                    car.Make,
+                    car.Model,
+                    car.Year,
+                    car.Stock,
+                    Created = DateTime.Now.ToString("G"),
+                    Updated = DateTime.Now.ToString("G")
+                });
+        }
+        catch (SqliteException ex) when (ex.SqliteErrorCode == 19)
+        {
+            throw new AddException("DUPLICATE_CAR", "This car already exists for this dealer.");
+        }
     }
 
     // Get car
     public async Task<Car?> GetByIdAsync(int dealerId, int carId)
     {
         using var connection = _databaseConnectionFactory.CreateConnection();
-
-        return await connection.QuerySingleOrDefaultAsync<Car>(@"
+        var car = await connection.QuerySingleOrDefaultAsync<Car>(@"
             SELECT id, dealer_id, make, model, year, stock, created, updated
             FROM cars
             WHERE id = @Id
             AND dealer_id = @DealerId",
             new { Id = carId, DealerId = dealerId }
         );
+
+        if (car == null)
+            throw new AddException("NOT_FOUND", "Car not found.");
+
+        return car;
     }
 
     // List cars and stock levels
@@ -93,7 +106,11 @@ public class CarService : ICarService
                 Updated = DateTime.Now.ToString("G")
             }
         );
-        return rows > 0;
+
+        if (rows == 0)
+            throw new AddException("NOT_FOUND", "Car not found.");
+
+        return true;
     }
 
     // Remove car
@@ -107,6 +124,10 @@ public class CarService : ICarService
             AND dealer_id = @DealerId",
             new { Id = carId, @DealerId = dealerId }
         );
-        return rows > 0;
+
+        if (rows == 0)
+            throw new AddException("NOT_FOUND", "Car not found.");
+
+        return true;
     }
 }

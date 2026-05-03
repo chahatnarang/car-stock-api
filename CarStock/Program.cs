@@ -4,6 +4,7 @@ using CarStock.Services;
 using CarStock.Interfaces;
 using FastEndpoints.Swagger;
 using FastEndpoints.Security;
+using CarStock.Helpers;
 
 Env.Load();
 
@@ -25,13 +26,17 @@ builder.Services.AddScoped<IDealerService, DealerService>();
 builder.Services.AddScoped<ICarService, CarService>();
 builder.Services.AddHttpContextAccessor();
 
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
+
 var app = builder.Build();
 app.MapGet("/", () => "CAR STOCK API ONLINE");
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")!;
 DatabaseInitialiser.Initialise(connectionString);
 
-app.UseHttpsRedirection();
+app.UseExceptionHandler();
+
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseSwaggerGen();

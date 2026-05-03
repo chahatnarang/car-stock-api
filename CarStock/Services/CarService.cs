@@ -38,15 +38,7 @@ public class CarRepository : ICarService
         using var connection = _databaseConnection.CreateConnection();
 
         return await connection.QuerySingleOrDefaultAsync<Car>(@"
-            SELECT
-                id,
-                dealer_id,
-                make,
-                model,
-                year,
-                stock,
-                created,
-                updated
+            SELECT id, dealer_id, make, model, year, stock, created, updated
             FROM cars
             WHERE id = @Id
             AND dealer_id = @DealerId",
@@ -59,15 +51,7 @@ public class CarRepository : ICarService
     {
         using var connection = _databaseConnection.CreateConnection();
         return await connection.QueryAsync<Car>(@"
-            SELECT
-                id,
-                dealer_id,
-                make,
-                model,
-                year,
-                stock,
-                created,
-                updated
+            SELECT id, dealer_id, make, model, year, stock, created, updated
             FROM cars
             WHERE dealer_id = @DealerId
             ORDERBY make, model, year",
@@ -80,15 +64,7 @@ public class CarRepository : ICarService
     {
         using var connection = _databaseConnection.CreateConnection();
         return await connection.QueryAsync<Car>(@"
-            SELECT
-                id,
-                dealer_id,
-                make,
-                model,
-                year,
-                stock,
-                created,
-                updated
+            SELECT id, dealer_id, make, model, year, stock, created, updated
             FROM cars
             WHERE dealer_id = @DealerId
             AND (@Make IS NULL OR make LIKE '%' || @Make || '%')
@@ -104,17 +80,16 @@ public class CarRepository : ICarService
         using var connection = _databaseConnection.CreateConnection();
         var rows = await connection.ExecuteAsync(@"
             UPDATE cars
-            SET stock = @Stock,
-                updated = @Updated
+            SET stock = @Stock, updated = @Updated
             WHERE id = @Id
             AND dealer_Id = @DealerId",
             new
             {
                 Stock = stock,
-                Updated = DateTime.Now.ToString("G"),
                 Id = carId,
-                DealerId = dealerId
-            }    
+                DealerId = dealerId,
+                Updated = DateTime.Now.ToString("G")
+            }
         );
         return rows > 0;
     }

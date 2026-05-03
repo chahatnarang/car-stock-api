@@ -16,7 +16,9 @@ public class DealerService : IDealerService
         using var connection = _databaseConnection.CreateConnection();
 
         return await connection.QuerySingleOrDefaultAsync<Dealer>(@"
-            SELECT id, name, email, password, created FROM dealers WHERE email = @EMAIL",
+            SELECT id, name, email, password, created
+            FROM dealers
+            WHERE email = @EMAIL",
             new { Email = email }
         );
     }

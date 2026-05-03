@@ -10,7 +10,7 @@ Env.Load();
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
-.AddAuthenticationJwtBearer(s => s.SigningKey = builder.Configuration["Jwt:SinginKey"]!)
+.AddAuthenticationJwtBearer(s => s.SigningKey = builder.Configuration["Jwt:SigningKey"]!)
 .AddAuthorization()
 .AddFastEndpoints()
 .SwaggerDocument(o => o.DocumentSettings = s =>
@@ -19,7 +19,7 @@ builder.Services
         s.Version = "v1";
     });
 
-builder.Services.AddSingleton<IDatabaseConnection, DatabaseConnection>();
+builder.Services.AddSingleton<IDatabaseConnectionFactory, DatabaseConnectionFactory>();
 builder.Services.AddScoped<ICurrentDealerService, CurrentDealerService>();
 builder.Services.AddScoped<IDealerService, DealerService>();
 builder.Services.AddScoped<ICarService, CarService>();

@@ -2,7 +2,7 @@ using Microsoft.Data.Sqlite;
 
 namespace CarStock.Interfaces;
 
-public interface IDatabaseConnection
+public interface IDatabaseConnectionFactory
 {
     SqliteConnection CreateConnection();
 }

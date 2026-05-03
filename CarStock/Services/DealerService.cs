@@ -6,16 +6,16 @@ namespace CarStock.Services;
 
 public class DealerService : IDealerService
 {
-    private readonly IDatabaseConnection _databaseConnection;
+    private readonly IDatabaseConnectionFactory _databaseConnectionFactory;
 
-    public DealerService(IDatabaseConnection databaseConnection)
+    public DealerService(IDatabaseConnectionFactory databaseConnectionFactory)
     {
-        _databaseConnection = databaseConnection;
+        _databaseConnectionFactory = databaseConnectionFactory;
     }
 
     public async Task<Dealer?> GetByEmailAsync(string email)
     {
-        using var connection = _databaseConnection.CreateConnection();
+        using var connection = _databaseConnectionFactory.CreateConnection();
 
         return await connection.QuerySingleOrDefaultAsync<Dealer>(@"
             SELECT id, name, email, password, created

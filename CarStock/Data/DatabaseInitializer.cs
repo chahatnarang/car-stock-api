@@ -28,7 +28,7 @@ public static class DatabaseInitialiser
                 stock INTEGER NOT NULL DEFAULT 0,
                 created TEXT NOT NULL,
                 updated TEXT NOT NULL,
-                FOREIGN KEY (dealer_id) REFERENCES dealer(id)
+                FOREIGN KEY (dealer_id) REFERENCES dealers(id)
             )
         ");
 

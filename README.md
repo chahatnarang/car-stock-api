@@ -23,7 +23,7 @@ Search car by make and model
 
 ### 1. Clone the repo
 
-git clone <https://github.com/chahatnarang/car-stock-api>
+git clone
 cd car-stock-api/CarStock
 
 ### 2. Create the .env file

@@ -44,7 +44,7 @@ public static class DatabaseInitialiser
                 new
                 {
                     Name = "Cars Melbourne",
-                    Email = "cars@carsmelbourne.com.au",
+                    Email = "dealer@carsmelbourne.com.au",
                     Password = BCrypt.Net.BCrypt.HashPassword("MelbournePassword123!"),
                     Created = DateTime.Now.ToString("G")
                 }
@@ -56,7 +56,7 @@ public static class DatabaseInitialiser
                 new
                 {
                     Name = "Cars Footscray",
-                    Email = "cars@carsfootscray.com.au",
+                    Email = "dealer@carsfootscray.com.au",
                     Password = BCrypt.Net.BCrypt.HashPassword("FootscrayPassword123!"),
                     Created = DateTime.Now.ToString("G")
                 }

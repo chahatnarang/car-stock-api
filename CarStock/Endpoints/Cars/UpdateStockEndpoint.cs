@@ -31,7 +31,7 @@ public class UpdateStockEndpoint : Endpoint<UpdateStockRequest>
 
     public override void Configure()
     {
-        Post("/cars/{id}/stock");
+        Put("/cars/{id}/stock");
         Description(d => d.WithTags("Cars"));
     }
 
